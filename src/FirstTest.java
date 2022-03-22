@@ -41,6 +41,8 @@ public class FirstTest {
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("app",
                 "/Users/mmozgov/JavaAppiumAutomation/apks/org.wikipedia.apk");
+        //Ex7*: Поворот экрана
+        capabilities.setCapability("orientation", "PORTRAIT");
 
         driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), capabilities);
         driver.manage().timeouts().implicitlyWait(DEFAULT_WAIT_TIMEOUT, TimeUnit.SECONDS);
@@ -53,11 +55,6 @@ public class FirstTest {
 
     @After
     public void tearDown() {
-        //Ex7*: Поворот экрана
-        if (driver.getOrientation().equals(ScreenOrientation.LANDSCAPE)) {
-            driver.rotate(ScreenOrientation.PORTRAIT);
-        }
-
         driver.quit();
     }
 
