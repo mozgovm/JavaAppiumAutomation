@@ -10,7 +10,7 @@ public class NavigationUI extends MainPageObject {
     }
 
     public MyListsPageObject openMyLists() {
-        final By savedListsButton = By.xpath("//android.widget.FrameLayout[@content-desc='Saved']");
+        final String savedListsButton = "xpath://android.widget.FrameLayout[@content-desc='Saved']";
         waitForElementAndClick(
                 savedListsButton,
                 "Could not open saved lists"

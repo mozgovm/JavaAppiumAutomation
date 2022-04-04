@@ -4,15 +4,15 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
 public class SingleListPageObject extends MainPageObject {
-    private static String ARTICLE_ELEMENT_XPATH_TPL = "//*[@text='ARTICLE_TITLE']";
+    private static String ARTICLE_ELEMENT_XPATH_TPL = "xpath://*[@text='ARTICLE_TITLE']";
 
     public SingleListPageObject(AppiumDriver driver) {
         super(driver);
     }
 
     public SingleListPageObject deleteArticleFromSavedList(String articleTitle) {
-        final By article = By.xpath(
-                ARTICLE_ELEMENT_XPATH_TPL.replaceFirst("ARTICLE_TITLE", articleTitle));
+        final String article =
+                ARTICLE_ELEMENT_XPATH_TPL.replaceFirst("ARTICLE_TITLE", articleTitle);
 
         swipeElementLeft(
                 article,
@@ -26,8 +26,7 @@ public class SingleListPageObject extends MainPageObject {
     }
 
     public ArticlePageObject openArticleFromSavedList(String articleTitle) {
-        final By article = By.xpath(
-                String.format(ARTICLE_ELEMENT_XPATH_TPL.replaceFirst("ARTICLE_TITLE", articleTitle)));
+        final String article = ARTICLE_ELEMENT_XPATH_TPL.replaceFirst("ARTICLE_TITLE", articleTitle);
 
         waitForElementAndClick(
                 article,

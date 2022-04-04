@@ -7,12 +7,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 
 public class ArticlePageObject extends MainPageObject{
-    private final By saveArticleButton = By.xpath("//*[@text='Save']");
-    private final By addArticleToList = By.xpath("//*[@text='ADD TO LIST']");
-    private final By articleTitle = By.xpath(
-            "//android.view.View[@resource-id='pcs']/android.view.View/android.widget.TextView");
-    final By listNameInput = By.xpath("//*[@resource-id='org.wikipedia:id/text_input'][@text='Name of this list']");
-    final By listSaveButton = By.xpath("//*[@resource-id='android:id/button1'][@text='OK']");
+    private final String saveArticleButton = "xpath://*[@text='Save']";
+    private final String addArticleToList = "xpath://*[@text='ADD TO LIST']";
+    private final String articleTitle =
+            "xpath://android.view.View[@resource-id='pcs']/android.view.View/android.widget.TextView";
+    final String listNameInput = "xpath://*[@resource-id='org.wikipedia:id/text_input'][@text='Name of this list']";
+    final String listSaveButton = "xpath://*[@resource-id='android:id/button1'][@text='OK']";
 
     public ArticlePageObject(AppiumDriver driver) {
         super(driver);
@@ -55,13 +55,15 @@ public class ArticlePageObject extends MainPageObject{
                 newListName,
                 String.format("Could not set value \"%s\" to element %s", newListName, listNameInput));
 
-        driver.findElement(listSaveButton).click();
+        waitForElementAndClick(
+                listSaveButton,
+                "Could not click 'Save' button");
 
         return this;
     }
 
     public ArticlePageObject saveOpenedArticleToExistingList(String existingListName) {
-        final By savedList = By.xpath(String.format("//*[@text='%s']", existingListName));
+        final String savedList = String.format("xpath://*[@text='%s']", existingListName);
         addOpenedArticleToList();
 
         waitForElementAndClick(
@@ -73,7 +75,7 @@ public class ArticlePageObject extends MainPageObject{
     }
 
     public SearchPageObject returnToSearchResultsFromOpenedArticle() {
-        final By backButton = By.xpath("//*[@content-desc='Navigate up']");
+        final String backButton = "xpath://*[@content-desc='Navigate up']";
 
         waitForElementAndClick(
                 backButton,
@@ -84,11 +86,7 @@ public class ArticlePageObject extends MainPageObject{
     }
 
     public boolean titleIsPresent(int timeoutSeconds) {
-        driver.manage().timeouts().implicitlyWait(timeoutSeconds, TimeUnit.SECONDS);
-        final boolean isPresent = driver.findElements(articleTitle).size() > 0;
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        return isPresent;
+        return checkElementPresent(articleTitle, timeoutSeconds);
     }
 
     public boolean articleTitleHasText(String text) {

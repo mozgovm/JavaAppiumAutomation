@@ -1,3 +1,5 @@
+package Tests;
+
 import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.MainPageObject;
@@ -24,7 +26,7 @@ public class FirstTest extends CoreTestCase {
 
     @Test
     public void testOpenedSearchInputText() {
-        final By searchInput = By.xpath("//*[@text='Search Wikipedia']");
+        final String searchInput = "xpath://*[@text='Search Wikipedia']";
         SearchPageObject
                 .initSearch()
                 .assertElementHasText(searchInput, "Search Wikipedia");

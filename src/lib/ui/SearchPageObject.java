@@ -8,17 +8,17 @@ import java.util.List;
 
 public class SearchPageObject extends MainPageObject {
     private static String
-            ARTICLE_XPATH_BY_TITLE_TPL = "//*[@text='ARTICLE_TITLE']",
-            SEARCH_RESULTS_BY_TITLE_TPL = "//*[@resource-id='org.wikipedia:id/page_list_item_title']" +
+            ARTICLE_XPATH_BY_TITLE_TPL = "xpath://*[@text='ARTICLE_TITLE']",
+            SEARCH_RESULTS_BY_TITLE_TPL = "xpath://*[@resource-id='org.wikipedia:id/page_list_item_title']" +
                     "[contains(@text, 'SEARCH_STRING')]";
 
-    private final By searchInput = By.xpath("//*[@text='Search Wikipedia']");
-    private final By backButton = By.xpath(
-            "//*[@resource-id='org.wikipedia:id/search_toolbar']/android.widget.ImageButton");
-    final By cancelSearchButton = By.id("org.wikipedia:id/search_close_btn");
-    final By searchResults = By.id("org.wikipedia:id/search_results_container");
-    final By searchResultTitle = By.id("org.wikipedia:id/page_list_item_title");
-    final By tutorialSkipButton = By.xpath("//*[@text='SKIP']");
+    private final String searchInput = "xpath://*[@text='Search Wikipedia']";
+    private final String backButton =
+            "xpath://*[@resource-id='org.wikipedia:id/search_toolbar']/android.widget.ImageButton";
+    final String cancelSearchButton = "id:org.wikipedia:id/search_close_btn";
+    final String searchResults = "id:org.wikipedia:id/search_results_container";
+    final String searchResultTitle = "id:org.wikipedia:id/page_list_item_title";
+    final String tutorialSkipButton = "xpath://*[@text='SKIP']";
 
     public SearchPageObject(AppiumDriver driver) {
         super(driver);
@@ -38,8 +38,8 @@ public class SearchPageObject extends MainPageObject {
     }
 
     public SearchPageObject waitForSearchResults(String searchString) {
-        final By searchResults = By.xpath(
-                SEARCH_RESULTS_BY_TITLE_TPL.replaceFirst("SEARCH_STRING", searchString));
+        final String searchResults =
+                SEARCH_RESULTS_BY_TITLE_TPL.replaceFirst("SEARCH_STRING", searchString);
         waitForElementPresent(
                 searchResults,
                 String.format("No results were found for search string %s", searchString));
@@ -69,8 +69,7 @@ public class SearchPageObject extends MainPageObject {
     }
 
     public ArticlePageObject openArticleFromSearchResults(String articleTitle) {
-        final By article = By.xpath(
-                String.format(ARTICLE_XPATH_BY_TITLE_TPL.replaceFirst("ARTICLE_TITLE", articleTitle)));
+        final String article = ARTICLE_XPATH_BY_TITLE_TPL.replaceFirst("ARTICLE_TITLE", articleTitle);
 
         waitForElementAndClick(
                 article,
@@ -94,6 +93,6 @@ public class SearchPageObject extends MainPageObject {
     }
 
     public List<WebElement> getListOfResultTitles() {
-        return driver.findElements(searchResultTitle);
+        return getListOfElements(searchResultTitle);
     }
 }
