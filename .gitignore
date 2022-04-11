@@ -3,3 +3,5 @@ out
 JavaAppiumAutomation.iml
 libs
 apks
+apps
+.DS_Store
